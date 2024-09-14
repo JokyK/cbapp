@@ -1,0 +1,102 @@
+/* Estilos del contenedor principal y el sidebar */
+#wrapper {
+    display: flex;
+    width: 100%;
+    height: 100vh;
+    transition: all 0.3s ease;
+}
+
+#sidebar-wrapper {
+    width: 250px;
+    height: 100vh;
+    background-color: #343a40;
+    transition: all 0.3s ease;
+    position: fixed;
+    z-index: 1000; /* Asegura que el sidebar esté por encima del contenido */
+}
+
+#page-content-wrapper {
+    margin-left: 250px; /* Ajuste inicial para el contenido */
+    padding: 20px;
+    width: calc(100% - 250px); /* Ajusta el ancho del contenido principal */
+    height: 100vh;
+    overflow-y: auto;
+    transition: margin-left 0.3s ease, width 0.3s ease;
+}
+
+/* Ajustes cuando el sidebar está contraído */
+.toggled #sidebar-wrapper {
+    margin-left: -250px; /* Mueve el sidebar fuera de la vista */
+}
+
+.toggled #page-content-wrapper {
+    margin-left: 0; /* Mueve el contenido principal hacia la izquierda */
+    width: 100%; /* Ajusta el ancho del contenido principal para que ocupe toda la pantalla */
+}
+
+/* Estilos para los elementos del menú */
+#menu a {
+    padding: 15px;
+    text-decoration: none; /* Eliminar subrayado en los enlaces */
+    color: #ffffff; /* Color del texto */
+    display: flex; /* Asegura que el icono y el texto estén alineados */
+    align-items: center; /* Alinea verticalmente el contenido */
+    border: none; /* Elimina bordes por defecto */
+    
+}
+
+/* Estilo del botón de cerrar sesión */
+a.list-group-item.bg-danger {
+    border: none; /* Eliminar borde del botón de cerrar sesión */
+}
+
+
+
+
+
+
+
+
+.form {
+    font-size: 16px;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    background-color: rgb(41, 41, 41);
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.541); /* Sombra suave */
+}
+
+.form label {
+    color: rgb(255, 255, 255);
+    font-size: 16px;
+    margin-right: 5px;
+    font-weight: bold;
+}
+
+.form select {
+    margin-right: 50px;
+    border: none;
+    background-color: white;
+    width: fit-content;
+    text-align: center;
+    padding: 2px 10px;
+    border-radius: 3px;
+}
+
+.form input {
+    font-size: 16px;
+    margin: 0;
+    text-align: center;
+    width: fit-content;
+    border-radius: 3px;
+    margin: 30px;
+    outline: none;
+    border: none;
+    color: #000000;
+    font-weight: bold;
+    background-color: #ffffff;
+    padding: 2px 20px;
+}

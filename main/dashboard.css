@@ -1,0 +1,114 @@
+/* Estilos del contenedor principal y el sidebar */
+#wrapper {
+    display: flex;
+    width: 100%;
+    height: 100vh;
+    transition: all 0.3s ease;
+}
+
+#sidebar-wrapper {
+    width: 250px;
+    height: 100vh;
+    background-color: #343a40;
+    transition: all 0.3s ease;
+    position: fixed;
+    z-index: 1000; /* Asegura que el sidebar esté por encima del contenido */
+}
+
+#page-content-wrapper {
+    margin-left: 250px; /* Ajuste inicial para el contenido */
+    padding: 20px;
+    width: calc(100% - 250px); /* Ajusta el ancho del contenido principal */
+    height: 100vh;
+    overflow-y: auto;
+    transition: margin-left 0.3s ease, width 0.3s ease;
+}
+
+/* Ajustes cuando el sidebar está contraído */
+.toggled #sidebar-wrapper {
+    margin-left: -250px; /* Mueve el sidebar fuera de la vista */
+}
+
+.toggled #page-content-wrapper {
+    margin-left: 0; /* Mueve el contenido principal hacia la izquierda */
+    width: 100%; /* Ajusta el ancho del contenido principal para que ocupe toda la pantalla */
+}
+  /* Estilos generales para el sidebar */
+        #sidebar-wrapper {
+            background-color: #343a40; /* Color de fondo oscuro */
+            min-height: 100vh; /* Altura mínima para llenar la pantalla */
+            transition: all 0.3s; /* Transición suave al mostrar/ocultar */
+        }
+
+        #sidebar-wrapper .list-group-item {
+            border: none; /* Sin bordes en los ítems */
+            padding: 15px 20px; /* Espaciado interno */
+            font-size: 1.1rem; /* Tamaño de fuente */
+            color: #ffffff; /* Color de texto por defecto */
+        }
+
+        #sidebar-wrapper .list-group-item:hover {
+            background-color: #495057; /* Color de fondo al pasar el ratón */
+            
+        }
+
+        .submenu-grados {
+            overflow: hidden; /* Ocultar contenido desbordado */
+            transition: max-height 0.5s ease-out; /* Animación suave */
+            max-height: 0; /* Altura máxima inicial del submenú */
+            display: flex; /* Mostrar elementos en fila */
+            flex-direction: column; /* Alinear elementos en columna */
+        }
+
+        .submenu-grados a {
+            background-color: #343a40;
+            padding: 10px 30px; /* Espaciado diferente para los ítems del submenú */
+            font-size: 0.9rem; /* Tamaño de fuente del submenú */
+            color: #ffffff; /* Color del texto en el submenú */
+            text-decoration: none; /* Sin subrayado en los enlaces */
+        }
+
+        /* Estilo del enlace principal */
+        .list-group-item-action {
+            cursor: pointer;
+        }
+
+          /* Estilos generales para el sidebar */
+          #sidebar-wrapper {
+            background-color: #343a40; /* Color de fondo oscuro */
+            min-height: 100vh; /* Altura mínima para llenar la pantalla */
+            transition: all 0.3s; /* Transición suave al mostrar/ocultar */
+        }
+
+        #sidebar-wrapper .list-group-item {
+            border: none; /* Sin bordes en los ítems */
+            padding: 15px 20px; /* Espaciado interno */
+            font-size: 1.1rem; /* Tamaño de fuente */
+            color: #ffffff; /* Color de texto por defecto */
+        }
+
+        #sidebar-wrapper .list-group-item:hover {
+            background-color: #495057; /* Color de fondo al pasar el ratón */
+            
+        }
+
+        .submenu-grados {
+            overflow: hidden; /* Ocultar contenido desbordado */
+            transition: max-height 0.5s ease-out; /* Animación suave */
+            max-height: 0; /* Altura máxima inicial del submenú */
+            display: flex; /* Mostrar elementos en fila */
+            flex-direction: column; /* Alinear elementos en columna */
+        }
+
+        .submenu-grados a {
+            background-color: #343a40;
+            padding: 10px 30px; /* Espaciado diferente para los ítems del submenú */
+            font-size: 0.9rem; /* Tamaño de fuente del submenú */
+            color: #ffffff; /* Color del texto en el submenú */
+            text-decoration: none; /* Sin subrayado en los enlaces */
+        }
+
+        /* Estilo del enlace principal */
+        .list-group-item-action {
+            cursor: pointer;
+        }

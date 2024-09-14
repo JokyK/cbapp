@@ -1,0 +1,36 @@
+table {
+    text-align: center;
+}
+
+input {
+    width: 100px;
+    font-size: 12px;
+}
+
+.nota {
+    width: 50px;
+    border-radius: 4px;
+    border: 1px solid lightgray;
+    background-color: white;
+    padding: 2px;
+    text-align: center;
+}
+
+tr .promfin .nota{
+    background-color: rgb(252, 243, 111);
+}
+tr .cotidiana{
+    background-color: white;
+}
+
+tr .integradora{
+    background-color: lightgray;
+}
+
+tr .examen{
+    background-color: white;
+}
+tr .promfin{
+    background-color: lightgray;
+    color: white;
+}
