@@ -1,26 +1,23 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
+<meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard para Maestros</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="dashboard.css">
+    
+    <link rel="stylesheet" href="notas.css">
+    <link rel="stylesheet" href="sidebar.css">
 </head>
 <body>
 
-<?php
-    session_start();
-    if (!isset($_SESSION["usuario"])){
-        header("location:index.php");
-    }
-?>
 
 <?php
+    session_start();
     include("../php/connDB.php"); // Conexión a la base de datos
 
     if (!isset($_SESSION["usuario"])) {
-        header("location:index.php");
+        header("location:../index.php");
     }
 
     $dui = $_SESSION["dui"];
@@ -37,8 +34,8 @@
 
 <div class="d-flex" id="wrapper">
  <!-- Sidebar -->
- <div class="bg-dark border-right d-flex flex-column" id="sidebar-wrapper">
-        <div class="sidebar-heading text-white py-3 px-3 fs-4 fw-bold">Panel de Maestro</div>
+    <div class="bg-dark border-right d-flex flex-column" id="sidebar-wrapper">
+    <div class="sidebar-heading text-white py-3 px-3 fs-4 fw-bold">Panel de Maestro</div>
         <div id="menu" class="list-group list-group-flush flex-grow-1">
             <a href="dashboard.php" class="list-group-item list-group-item-action bg-dark text-white d-flex align-items-center">
                 <i class="fa-solid fa-home me-2"></i> Inicio

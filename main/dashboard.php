@@ -6,22 +6,17 @@
     <title>Dashboard para Maestros</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="dashboard.css">
+    <link rel="stylesheet" href="sidebar.css">
+
 </head>
 <body>
 
 <?php
-    session_start();
-    if (!isset($_SESSION["usuario"])){
-        header("location:index.php");
-    }
-?>
-
-<?php
+   session_start();
     include("../php/connDB.php"); // Conexión a la base de datos
 
     if (!isset($_SESSION["usuario"])) {
-        header("location:index.php");
+        header("location:../index.php");
     }
 
     $dui = $_SESSION["dui"];

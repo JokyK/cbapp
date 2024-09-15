@@ -5,67 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard para Maestros</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="notas.css">
+    <link rel="stylesheet" href="sidebar.css">
 </head>
-
-<style>
-      /* Estilos generales para el sidebar */
-      #sidebar-wrapper {
-            background-color: #343a40; /* Color de fondo oscuro */
-            min-height: 100vh; /* Altura mínima para llenar la pantalla */
-            transition: all 0.3s; /* Transición suave al mostrar/ocultar */
-        }
-
-        #sidebar-wrapper .list-group-item {
-            border: none; /* Sin bordes en los ítems */
-            padding: 15px 20px; /* Espaciado interno */
-            font-size: 1.1rem; /* Tamaño de fuente */
-            color: #ffffff; /* Color de texto por defecto */
-        }
-
-        #sidebar-wrapper .list-group-item:hover {
-            background-color: #495057; /* Color de fondo al pasar el ratón */
-            
-        }
-
-        .submenu-grados {
-            overflow: hidden; /* Ocultar contenido desbordado */
-            transition: max-height 0.5s ease-out; /* Animación suave */
-            max-height: 0; /* Altura máxima inicial del submenú */
-            display: flex; /* Mostrar elementos en fila */
-            flex-direction: column; /* Alinear elementos en columna */
-        }
-
-        .submenu-grados a {
-            background-color: #343a40;
-            padding: 10px 30px; /* Espaciado diferente para los ítems del submenú */
-            font-size: 0.9rem; /* Tamaño de fuente del submenú */
-            color: #ffffff; /* Color del texto en el submenú */
-            text-decoration: none; /* Sin subrayado en los enlaces */
-        }
-
-        /* Estilo del enlace principal */
-        .list-group-item-action {
-            cursor: pointer;
-        }
-</style>
 
 <body>
 
 
 <?php
     session_start();
-    include("../php/connDB.php");
-    if (!isset( $_SESSION["usuario"])){
-        header("location:index.php");
-    }
-    ?>
-
-<?php
     include("../php/connDB.php"); // Conexión a la base de datos
 
     if (!isset($_SESSION["usuario"])) {
-        header("location:index.php");
+        header("location:../index.php");
     }
 
     $dui = $_SESSION["dui"];

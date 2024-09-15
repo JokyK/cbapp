@@ -1,5 +1,5 @@
 <?php
-include("../php/connDB.php");
+include("connDB.php");
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     
         
@@ -20,7 +20,7 @@ include("../php/connDB.php");
                     $_SESSION["dui"] = $row["dui"];
                     // La contraseña es correcta
                     echo "Inicio de sesión exitoso. ¡Bienvenido " . $_SESSION["usuario"] . "!";
-                    header('location:../main/dashboard.php');
+                    header('location:../AppCB/main/dashboard.php');
                 } else {
                     // Contraseña incorrecta
                     ?>
