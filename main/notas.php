@@ -8,6 +8,7 @@
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="notas.css">
     <link rel="stylesheet" href="sidebar.css">
+    <link rel="stylesheet" href="../php/tablaGenerada.css">
 </head>
 
 <body>
@@ -81,11 +82,11 @@
         <!-- Page Content -->
         <div id="page-content-wrapper">
             <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
-                <button class="btn btn-primary" id="menu-toggle"><i id="sidebar-icon" class="fa-solid fa-bars"></i></button>
-            </nav>
+            <button class="btn btn-primary mr-2" id="menu-toggle"><i class="fa-solid fa-bars"></i></button><h style="font-weight: bold;" >NOTAS</h>   
+        </nav>
 
             <div class="container-fluid">
-                <h1 class="mt-4">Bienvenido, <?php echo $_SESSION["usuario"] ?></h1>
+            <h2 class="mt-2" style="color:  #343a40;" >Bienvenido, Prof. <?php echo $_SESSION["nombre"] ?>.</h2>
                 <p>Estas en la sección de notas, aca puedes agregar las notas de tus grados y materias.</p>
                 <!-- Aquí puedes agregar más contenido como gráficos, estadísticas, etc. -->
 

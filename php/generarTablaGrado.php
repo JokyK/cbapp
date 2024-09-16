@@ -19,7 +19,6 @@
     }
 
     td a{
-        background-color: rgb(255, 190, 100);;
         border-radius: 4px;
         padding: 7px 10px;
     }
@@ -60,7 +59,7 @@
                         <td><?php echo $row["apellidos"]?></td>
                         <td><?php echo $row["nombre"] ?></td>
                         <td>
-                        <a href="libreta.php?nie=<?php echo $row["nie"]?>" class="link-light"><i class="fa-solid fa-clipboard"></i> LIBRETA</a>
+                        <a href="libreta.php?nie=<?php echo $row["nie"]?> " class="link-primary"><i class="fa-solid fa-eye"></i> LIBRETA</a>
                         </td>
         
                         </tr>

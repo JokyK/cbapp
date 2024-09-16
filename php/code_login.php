@@ -18,6 +18,7 @@ include("connDB.php");
                 $row = $result->fetch_assoc();
                     $_SESSION["usuario"] = $row['correo'];
                     $_SESSION["dui"] = $row["dui"];
+                    $_SESSION["nombre"] = $row["nombre"]. " ". $row["apellidos"];
                     // La contraseña es correcta
                     echo "Inicio de sesión exitoso. ¡Bienvenido " . $_SESSION["usuario"] . "!";
                     header('location:../AppCB/main/dashboard.php');

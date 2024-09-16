@@ -59,7 +59,8 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
             }
         }
     }
-}
 
-header("Location: ../main/notas.php");
-exit();
+    // Redirigir de nuevo a generarTablaNotas.php con los parámetros correspondientes
+    header("Location: ../main/notas.php");
+    exit();
+}

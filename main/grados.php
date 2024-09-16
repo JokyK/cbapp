@@ -78,11 +78,11 @@ session_start();
     <!-- Page Content -->
     <div id="page-content-wrapper">
         <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
-            <button class="btn btn-primary" id="menu-toggle"><i class="fa-solid fa-bars"></i></button>
+        <button class="btn btn-primary mr-2" id="menu-toggle"><i class="fa-solid fa-bars"></i></button><h style="font-weight: bold;" >GRADOS</h>
         </nav>
 
         <div class="container-fluid">
-            <h1 class="mt-4">Bienvenido, <?php echo $_SESSION["usuario"]. ", ". $_SESSION["dui"] ?></h1>
+        <h2 class="mt-2" style="color:  #343a40;" >Bienvenido, Prof. <?php echo $_SESSION["nombre"] ?>.</h2>
             <p>Aqui puedes ver tus grados</p>
             
             <?php

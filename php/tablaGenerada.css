@@ -1,5 +1,6 @@
 table {
     text-align: center;
+    font-size: 12px;
 }
 
 input {
@@ -9,28 +10,104 @@ input {
 
 .nota {
     width: 50px;
-    border-radius: 4px;
-    border: 1px solid lightgray;
-    background-color: white;
-    padding: 2px;
+    font-size: 12px;
+    border: 1px solid rgb(197, 197, 197);
+    background-color: rgb(255, 255, 255);
     text-align: center;
 }
+/*PONIENDO TRANSPARENTE EL COLOR DEL INPUT DE LAS NOTAS PROMEDIADAS*/
+.promedio-cotidiana{
+    background-color: transparent;
+    border: none;
 
-tr .promfin .nota{
-    background-color: rgb(252, 243, 111);
 }
-tr .cotidiana{
-    background-color: white;
+.promedio-integradora{
+    background-color: transparent;
+    border: none;
+
+}
+.promedio-examen{
+    background-color: transparent;
+    border: none;
+
 }
 
-tr .integradora{
-    background-color: lightgray;
+tr .promfin .nota {
+    background-color: transparent;
+    border: none;
 }
 
-tr .examen{
-    background-color: white;
+/*DANDO COLOR A LAS COLUMNAS*/
+tr .alumno{
+    background-color:rgb(255, 255, 255);
+    color: rgb(39, 39, 39); 
 }
-tr .promfin{
-    background-color: lightgray;
-    color: white;
+
+tr .alumno input{
+    width:max-content;
+}
+
+
+
+tr .td-cotidiana .nota:focus{
+    outline: none;
+}
+tr .td-integradora .nota:focus{
+    outline: none;
+}
+tr .td-examen .nota:focus{
+    outline: none;
+}
+tr .promfin .nota:focus{
+    outline: none;
+}
+
+
+
+
+
+tr .cotidiana {
+    background-color: #fff;
+}
+tr .td-cotidiana{
+    background-color:rgb(255, 253, 110);
+    width: 20px;
+}
+
+
+tr .integradora {
+    background-color: #fff;
+}
+tr .td-integradora{
+    background-color:rgb(255, 253, 110);
+    width: 20px;
+}
+
+
+tr .examen {
+    background-color: #fff;  
+}
+tr .td-examen{
+    background-color:rgb(255, 253, 110);
+    width: 20px;
+}
+
+
+tr .nombre-input{
+    background-color: transparent;
+    outline: none;
+    border: none;
+    color: rgb(39, 39, 39);
+}
+tr .promfin {
+    background-color:rgb(255, 253, 110);
+    width: 20px;
+}
+
+table{
+    border: 2px solid black;
+}
+
+button{
+    background-color: red;
 }

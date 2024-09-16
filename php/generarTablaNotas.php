@@ -9,46 +9,6 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 ?>
 
 <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-<style>
-    table {
-        text-align: center;
-    }
-
-    input {
-        width: 100px;
-        font-size: 12px;
-    }
-
-    .nota {
-        width: 50px;
-        border-radius: 4px;
-        border: 1px solid lightgray;
-        background-color: white;
-        padding: 2px;
-        text-align: center;
-    }
-
-    tr .promfin .nota {
-        background-color: rgb(252, 243, 111);
-    }
-
-    tr .cotidiana {
-        background-color: white;
-    }
-
-    tr .integradora {
-        background-color: lightgray;
-    }
-
-    tr .examen {
-        background-color: white;
-    }
-
-    tr .promfin {
-        background-color: lightgray;
-        color: white;
-    }
-</style>
 <div class="alert alert-success" role="alert" style="width: 100%; text-align:center; padding: 5px; margin-top: 20px; ">
     Datos cargados correctamente <h5>Grado: <?php echo $grado . ", Materia: " . $materia . ", Periodo: " . $periodo; ?></h5>
 </div>
@@ -58,18 +18,19 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
             <input type="hidden" name="grado" value="<?php echo htmlspecialchars($grado); ?>">
             <input type="hidden" name="materia" value="<?php echo htmlspecialchars($materia); ?>">
             <input type="hidden" name="periodo" value="<?php echo htmlspecialchars($periodo); ?>">
-
+            <button type="submit" class="btn btn-primary mb-2" style="color: white;" > <i class="fa-solid fa-floppy-disk"></i> Guardar Notas</button>
+        
             <table class="table table-striped table-bordered">
                 <thead>
                     <tr>
                         <th class="alumno">N°</th>
                         <th class="alumno">Alumno</th>
                         <th colspan="5" class="cotidiana">Actividad Cotidiana 35%</th>
-                        <th class="cotidiana">Prom. Cot</th>
+                        <th class="cotidiana  td-cotidiana">Prom. Cot</th>
                         <th class="integradora">Actividad Integradora 35%</th>
-                        <th class="integradora">Prom. Int</th>
+                        <th class="integradora td-integradora">Prom. Int</th>
                         <th class="examen">Examen 30%</th>
-                        <th class="examen">Prom. Exa</th>
+                        <th class="examen td-examen">Prom. Exa</th>
                         <th class="promfin">Prom. Final</th>
                     </tr>
                     <tr>
@@ -80,11 +41,11 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                         <th class="cotidiana">Libro</th>
                         <th class="cotidiana">1°Examen</th>
                         <th class="cotidiana">2°Examen</th>
-                        <th class="cotidiana">%</th>
+                        <th class="cotidiana  td-cotidiana">%</th>
                         <th class="integradora">Integradora</th>
-                        <th class="integradora">%</th>
+                        <th class="integradora td-integradora">%</th>
                         <th class="examen">Examen Trimestral</th>
-                        <th class="examen">%</th>
+                        <th class="examen td-examen">%</th>
                         <th class="promfin"></th>
                     </tr>
                 </thead>
@@ -121,7 +82,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                     ?>
                             <tr>
                                 <td class="alumno"><?php echo $numeroLista; ?></td>
-                                <td class="alumno"><input type="text" value="<?php echo $nombreCompleto; ?>" readonly></td>
+                                <td class="alumno"><input type="text" class="nombre-input" value="<?php echo $nombreCompleto; ?>" readonly></td>
 
                                 <!-- ACTIVIDADES COTIDIANAS -->
                                 <?php
@@ -133,7 +94,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                                     echo '<td class="cotidiana"><input class="nota" type="number" name="cotidiana[' . $nie . '][' . $actividad . ']" value="' . htmlspecialchars($nota) . '" min="0" max="10" step="0.01" onchange="calcularPromedios(this)"></td>';
                                 }
                                 $promCotidianas = $promCotidianas / count($actividadesCotidianas);
-                                echo '<td class="cotidiana"><input class="nota promedio-cotidiana" type="number" value="' . number_format($promCotidianas * 0.35, 2) . '" readonly></td>';
+                                echo '<td class="cotidiana td-cotidiana"><input class="nota promedio-cotidiana" type="number" value="' . number_format($promCotidianas * 0.35, 2) . '" readonly></td>';
                                 ?>
 
                                 <!-- ACTIVIDAD INTEGRADORA -->
@@ -142,7 +103,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                                 $notaIntegradora = isset($integradoras['Integradora']) ? $integradoras['Integradora'] : '';
                                 $promIntegradoras += $notaIntegradora ? $notaIntegradora : 0;
                                 echo '<td class="integradora"><input class="nota" type="number" name="integradora[' . $nie . '][Integradora]" value="' . htmlspecialchars($notaIntegradora) . '" min="0" max="10" step="0.01" onchange="calcularPromedios(this)"></td>';
-                                echo '<td class="integradora"><input class="nota promedio-integradora" type="number" value="' . number_format($promIntegradoras * 0.35, 2) . '" readonly></td>';
+                                echo '<td class="integradora td-integradora"><input class="nota promedio-integradora" type="number" value="' . number_format($promIntegradoras * 0.35, 2) . '" readonly></td>';
                                 ?>
 
                                 <!-- EXAMEN -->
@@ -151,7 +112,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                                 $notaExamen = isset($examenes['Examen Trimestral']) ? $examenes['Examen Trimestral'] : '';
                                 $promExamen += $notaExamen ? $notaExamen : 0;
                                 echo '<td class="examen"><input class="nota" type="number" name="examen[' . $nie . '][Examen Trimestral]" value="' . htmlspecialchars($notaExamen) . '" min="0" max="10" step="0.01" onchange="calcularPromedios(this)"></td>';
-                                echo '<td class="examen"><input class="nota promedio-examen" type="number" value="' . number_format($promExamen * 0.30, 2) . '" readonly></td>';
+                                echo '<td class="examen td-examen"><input class="nota promedio-examen" type="number" value="' . number_format($promExamen * 0.30, 2) . '" readonly></td>';
                                 ?>
 
                                 <!-- PROMEDIO FINAL -->
@@ -168,8 +129,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                     ?>
                 </tbody>
             </table>
-            <button type="submit" class="btn btn-warning">Guardar Notas</button>
-        </form>
+           </form>
     </div>
 </div>
 

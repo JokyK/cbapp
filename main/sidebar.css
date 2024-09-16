@@ -44,7 +44,12 @@
     border: none; /* Elimina bordes por defecto */
     
 }
-
+#menu-toggle{
+background-color: rgb(255, 255, 255);
+color: black;
+font-size: 30px;
+border: none;
+}
 
 #sidebar-wrapper .list-group-item {
     border: none; /* Sin bordes en los ítems */
