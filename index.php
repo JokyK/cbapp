@@ -21,7 +21,7 @@
                     session_start();
                      //SI SE INICIO ANTERIORMENTE = ENVIAR A LA DASHBOARD
                     if(isset($_SESSION["usuario"])){
-                        header('location:../AppCB/main/dashboard.php');
+                        header('location:../cbapp/main/dashboard.php');
                     }
                     ?>
 
@@ -70,7 +70,7 @@
 <div class="main-content">
     <div class="login-container">
         <?php
-            include("../AppCB/php/code_login.php");
+            include("../cbapp/php/code_login.php");
             ?>
         <img class="mb-3" width="200px" src="../AppCB/imgs/logocb.png" alt="">
         <form method="post">

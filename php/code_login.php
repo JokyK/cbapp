@@ -21,7 +21,7 @@ include("connDB.php");
                     $_SESSION["nombre"] = $row["nombre"]. " ". $row["apellidos"];
                     // La contraseña es correcta
                     echo "Inicio de sesión exitoso. ¡Bienvenido " . $_SESSION["usuario"] . "!";
-                    header('location:../AppCB/main/dashboard.php');
+                    header('location:../cbapp/main/dashboard.php');
                 } else {
                     // Contraseña incorrecta
                     ?>

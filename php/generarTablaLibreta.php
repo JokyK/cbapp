@@ -1,4 +1,3 @@
-
 <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 <style>
     table {
@@ -19,548 +18,145 @@
         text-align: center;
     }
 
-
+    /* Estilo para las columnas de Nota Final (NF y PF) */
+    .nota-final {
+        background-color: #ffff99; /* Fondo amarillo */
+        font-weight: bold; /* Negrita para resaltar */
+    }
 </style>
-<div class="alert alert-success" role="alert" style="width: 100%; text-align:center; padding: 5px; margin-top: 20px; ">
+
+<div class="alert alert-success" role="alert" style="width: 100%; text-align:center; padding: 5px; margin-top: 20px;">
     <?php
         include("../php/connDB.php");
-      $dui = $_SESSION["dui"];
-      $nie = $_GET["nie"];
-    $consulta= "SELECT * FROM alumnos WHERE nie = '$nie' ";
-    $resultado = mysqli_query($conn, $consulta);
-    if(mysqli_num_rows($resultado)> 0){
-        $resultado = mysqli_fetch_assoc($resultado);
-        $nombre = $resultado["nombre"];
-        $apellidos = $resultado["apellidos"];
-    }
+        $dui = $_SESSION["dui"];
+        $nie = $_GET["nie"];
+        $consulta = "SELECT * FROM alumnos WHERE nie = '$nie'";
+        $resultado = mysqli_query($conn, $consulta);
+        if (mysqli_num_rows($resultado) > 0) {
+            $resultado = mysqli_fetch_assoc($resultado);
+            $nombre = $resultado["nombre"];
+            $apellidos = $resultado["apellidos"];
+        }
     ?>
-                    Datos cargados correctamente <h5>Tabla de notas de: <?php echo $nombre." ".$apellidos; ?></h5>
-                    </div>
+    Datos cargados correctamente <h5>Tabla de notas de: <?php echo $nombre . " " . $apellidos; ?></h5>
+</div>
+
 <div class="ml-5 mr-5 mt-5">
     <div class="table-responsive">
-
-            <table class="table table-striped table-bordered">
-                <thead>
+        <table class="table table-striped table-bordered">
+            <thead>
                 <tr>
                     <th>Materia</th>
-                    <th colspan="7" >1er Periodo</th>
+                    <th colspan="7">1er Periodo</th>
                     <th colspan="7">2do Periodo</th>
                     <th colspan="7">3er Periodo</th>
-                    <th>NF</th>
+                    <th>NF</th> <!-- Columna de nota final con clase especial -->
                 </tr>
-                
                 <tr>
-                <th></th>
-                <th class="nota">N1</th>
-                <th class="nota">0.35%</th>
-                <th class="nota">N2</th>
-                <th class="nota">0.35%</th>
-                <th class="nota">N3</th>
-                <th class="nota">0.30%</th>
-                <th class="nota">NP</th>
-                <th class="nota">N1</th>
-                <th class="nota">0.35%</th>
-                <th class="nota">N2</th>
-                <th class="nota">0.35%</th>
-                <th class="nota">N3</th>
-                <th class="nota">0.30%</th>
-                <th class="nota">NP</th>
-                <th class="nota">N1</th>
-                <th class="nota">0.35%</th>
-                <th class="nota">N2</th>
-                <th class="nota">0.35%</th>
-                <th class="nota">N3</th>
-                <th class="nota">0.30%</th>
-                <th class="nota">NP</th>
-                <th class="nota">PF</th>
+                    <th></th>
+                    <th class="nota">N1</th>
+                    <th class="nota">0.35%</th>
+                    <th class="nota">N2</th>
+                    <th class="nota">0.35%</th>
+                    <th class="nota">N3</th>
+                    <th class="nota">0.30%</th>
+                    <th class="nota nota-final">NP</th> <!-- Nota final del periodo con clase especial -->
+                    <th class="nota">N1</th>
+                    <th class="nota">0.35%</th>
+                    <th class="nota">N2</th>
+                    <th class="nota">0.35%</th>
+                    <th class="nota">N3</th>
+                    <th class="nota">0.30%</th>
+                    <th class="nota nota-final">NP</th> <!-- Nota final del periodo con clase especial -->
+                    <th class="nota">N1</th>
+                    <th class="nota">0.35%</th>
+                    <th class="nota">N2</th>
+                    <th class="nota">0.35%</th>
+                    <th class="nota">N3</th>
+                    <th class="nota">0.30%</th>
+                    <th class="nota nota-final">NP</th> <!-- Nota final del periodo con clase especial -->
+                    <th class="nota-final">PF</th> <!-- Nota final general con clase especial -->
                 </tr>
-                </thead>
-
+            </thead>
             <tbody>
                 <?php
+                    function obtenerNotas($conn, $nie, $materia, $periodo, $tipo_actividad) {
+                        $consulta = "SELECT nota FROM notas WHERE nie = '$nie' AND materia = '$materia' AND periodo = '$periodo' AND tipo_actividad = '$tipo_actividad'";
+                        $resultado = mysqli_query($conn, $consulta);
+                        $totalNotas = 0;
+                        $numeroNotas = 0;
+                        while ($row = mysqli_fetch_array($resultado)) {
+                            $totalNotas += $row['nota'];
+                            $numeroNotas++;
+                        }
+                        return [$totalNotas, $numeroNotas];
+                    }
+
+                    function calcularPromedio($totalNotas, $numeroNotas) {
+                        return $numeroNotas > 0 ? $totalNotas / $numeroNotas : "-";
+                    }
+
+                    function calcularNotaPeriodo($promedio, $peso) {
+                        return $promedio !== "-" ? $promedio * $peso : "-";
+                    }
+
+                    function calcularNotas($conn, $nie, $materia, $periodo) {
+                        $notas = [];
+                        $tipos = ['cotidiana' => 0.35, 'integradora' => 0.35, 'examen' => 0.30];
+                        foreach ($tipos as $tipo => $peso) {
+                            list($totalNotas, $numeroNotas) = obtenerNotas($conn, $nie, $materia, $periodo, $tipo);
+                            $promedio = calcularPromedio($totalNotas, $numeroNotas);
+                            $notas[$tipo] = [
+                                'promedio' => $promedio,
+                                'nota_periodo' => calcularNotaPeriodo($promedio, $peso)
+                            ];
+                        }
+                        return $notas;
+                    }
+
                     $consulta = "SELECT cod_materia FROM maestros_materias WHERE dui_maestro = '$dui'";
                     $resultado = mysqli_query($conn, $consulta);
-                    if(mysqli_num_rows($resultado) > 0){
-                        while($row = mysqli_fetch_assoc($resultado)){
+                    if (mysqli_num_rows($resultado) > 0) {
+                        while ($row = mysqli_fetch_assoc($resultado)) {
                             $materia = $row["cod_materia"];
-                                ?>
-                                <tr>
-                                <td><?php echo $row["cod_materia"] ?></td>
+                            echo "<tr><td>{$materia}</td>";
 
-
-
-
-
+                            $promedios = [];
+                            for ($periodo = 1; $periodo <= 3; $periodo++) {
+                                $periodoStr = $periodo . 'PER';
+                                $notas = calcularNotas($conn, $nie, $materia, $periodoStr);
                                 
-                                <?php
+                                // Mostrar los promedios y notas del periodo o "-"
+                                $promedioCotidiana = $notas['cotidiana']['promedio'];
+                                $notaCotidiana = $notas['cotidiana']['nota_periodo'];
+                                $promedioIntegradora = $notas['integradora']['promedio'];
+                                $notaIntegradora = $notas['integradora']['nota_periodo'];
+                                $promedioExamen = $notas['examen']['promedio'];
+                                $notaExamen = $notas['examen']['nota_periodo'];
+                                
+                                // Calcular el promedio total si no hay "-"
+                                $promedioTotal = ($notaCotidiana !== "-" && $notaIntegradora !== "-" && $notaExamen !== "-") ? 
+                                    $notaCotidiana + $notaIntegradora + $notaExamen : "-";
+                                
+                                echo "<td>{$promedioCotidiana}</td>";
+                                echo "<td>{$notaCotidiana}</td>";
+                                echo "<td>{$promedioIntegradora}</td>";
+                                echo "<td>{$notaIntegradora}</td>";
+                                echo "<td>{$promedioExamen}</td>";
+                                echo "<td>{$notaExamen}</td>";
+                                echo "<td class='nota-final'>{$promedioTotal}</td>"; // Fondo amarillo para NP
 
-
-//====================================================================================================================================================================
-//INICIO PRIMER PERIODO
-
-
-                                //PRIMER PERIODO COTIDIANAS
-                            $consultaPrimerTrimestre = "SELECT * FROM notas WHERE nie = '$nie' AND materia = '$materia' AND periodo = '1PER' AND tipo_actividad='cotidiana'";
-                            $resultadoPrimerTrimestre = mysqli_query($conn, $consultaPrimerTrimestre);
-                            $totalNotas = 0;
-                            $numeroNotas = 0;
-                            if(mysqli_num_rows($resultadoPrimerTrimestre) > 0){
-                                while($row = mysqli_fetch_array($resultadoPrimerTrimestre)){
-                                    // Asumiendo que tienes un campo 'nota' en tu tabla
-                                    $nota = $row['nota'];
-                                    $totalNotas += $nota;
-                                    // Contamos la cantidad de notas
-                                    $numeroNotas++;
-
-                                    
-                                }
-                                if ($numeroNotas > 0) {
-                                    // Calculamos el promedio
-                                    $promedio = $totalNotas / 5;
-                                    $cotidiana = $promedio*0.35 ;
-                                    ?>
-                                <td><?php echo $promedio; ?></td>
-                                <td><?php echo $cotidiana; ?></td>
-                               
-                                    <?php
-
-                                } else {
-
-                                }
-                            } else {
-
+                                $promedios[] = $promedioTotal;
                             }
 
-                            //FIN PRIMER PERIODO COTIDIANAS
-
-
-
-//====================================================================================================================================================================
-
-
-                             //PRIMER PERIODO INTEGRADORA
-                             $consultaPrimerTrimestre = "SELECT * FROM notas WHERE nie = '$nie' AND materia = '$materia' AND periodo = '1PER' AND tipo_actividad='integradora'";
-                             $resultadoPrimerTrimestre = mysqli_query($conn, $consultaPrimerTrimestre);
-                             $totalNotas = 0;
-                             $numeroNotas = 0;
-                             if(mysqli_num_rows($resultadoPrimerTrimestre) > 0){
-                                 while($row = mysqli_fetch_array($resultadoPrimerTrimestre)){
-                                     // Asumiendo que tienes un campo 'nota' en tu tabla
-                                     $nota = $row['nota'];
-                                     $totalNotas += $nota;
-                                     // Contamos la cantidad de notas
-                                     $numeroNotas++;
- 
-                                     
-                                 }
-                                 if ($numeroNotas > 0) {
-                                     // Calculamos el promedio
-                                     $promedio = $totalNotas / 1;
-                                     $integradora = $promedio*0.35 ;
-                                     ?>
-                                 <td><?php echo $promedio; ?></td>
-                                 <td><?php echo $integradora; ?></td>
-                                
-                                     <?php
- 
-                                 } else {
-
-                                 }
-                             } else {
-
-                             }
- 
-                             //FIN PRIMER PERIODO INTEGRADORA
-
-
-
-
-
-
-
-//====================================================================================================================================================================
-
-
-                             //PRIMER PERIODO EXAMEN
-                             $consultaPrimerTrimestre = "SELECT * FROM notas WHERE nie = '$nie' AND materia = '$materia' AND periodo = '1PER' AND tipo_actividad='examen'";
-                             $resultadoPrimerTrimestre = mysqli_query($conn, $consultaPrimerTrimestre);
-                             $totalNotas = 0;
-                             $numeroNotas = 0;
-                             if(mysqli_num_rows($resultadoPrimerTrimestre) > 0){
-                                 while($row = mysqli_fetch_array($resultadoPrimerTrimestre)){
-                                     // Asumiendo que tienes un campo 'nota' en tu tabla
-                                     $nota = $row['nota'];
-                                     $totalNotas += $nota;
-                                     // Contamos la cantidad de notas
-                                     $numeroNotas++;
- 
-                                     
-                                 }
-                                 if ($numeroNotas > 0) {
-                                     // Calculamos el promedio
-                                     $promedio = $totalNotas / 1;
-                                     $examen = $promedio*0.30 ;
-                                     ?>
-                                 <td><?php echo $promedio; ?></td>
-                                 <td><?php echo $examen; ?></td>
-                                <td><?php $prom1 = $cotidiana + $integradora + $examen; echo $prom1 ?></td>
-                                     <?php
- 
-                                 } else {
-
-                                 }
-                             } else {
-
-                             }
- 
-                             //FIN PRIMER PERIODO EXAMEN                            
-
-                                ?>
-
-                                
-
-                            <?php
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//====================================================================================================================================================================
-//INICIO SEGUNDO PERIODO
-
-
-                                //SEGUNDO PERIODO COTIDIANAS
-                                $consultaPrimerTrimestre = "SELECT * FROM notas WHERE nie = '$nie' AND materia = '$materia' AND periodo = '2PER' AND tipo_actividad='cotidiana'";
-                                $resultadoPrimerTrimestre = mysqli_query($conn, $consultaPrimerTrimestre);
-                                $totalNotas = 0;
-                                $numeroNotas = 0;
-                                if(mysqli_num_rows($resultadoPrimerTrimestre) > 0){
-                                    while($row = mysqli_fetch_array($resultadoPrimerTrimestre)){
-                                        // Asumiendo que tienes un campo 'nota' en tu tabla
-                                        $nota = $row['nota'];
-                                        $totalNotas += $nota;
-                                        // Contamos la cantidad de notas
-                                        $numeroNotas++;
-    
-                                        
-                                    }
-                                    if ($numeroNotas > 0) {
-                                        // Calculamos el promedio
-                                        $promedio = $totalNotas / 5;
-                                        $cotidiana = $promedio*0.35 ;
-                                        ?>
-                                    <td><?php echo $promedio; ?></td>
-                                    <td><?php echo $cotidiana; ?></td>
-                                   
-                                        <?php
-    
-                                    } else {
-    
-                                    }
-                                } else {
-    
-                                }
-    
-                                //FIN SEGUNDO PERIODO COTIDIANAS
-
-
-
-
-
-
-
-
-                                //====================================================================================================================================================================
-
-
-                             //SEGUNDO PERIODO INTEGRADORA
-                             $consultaPrimerTrimestre = "SELECT * FROM notas WHERE nie = '$nie' AND materia = '$materia' AND periodo = '2PER' AND tipo_actividad='integradora'";
-                             $resultadoPrimerTrimestre = mysqli_query($conn, $consultaPrimerTrimestre);
-                             $totalNotas = 0;
-                             $numeroNotas = 0;
-                             if(mysqli_num_rows($resultadoPrimerTrimestre) > 0){
-                                 while($row = mysqli_fetch_array($resultadoPrimerTrimestre)){
-                                     // Asumiendo que tienes un campo 'nota' en tu tabla
-                                     $nota = $row['nota'];
-                                     $totalNotas += $nota;
-                                     // Contamos la cantidad de notas
-                                     $numeroNotas++;
- 
-                                     
-                                 }
-                                 if ($numeroNotas > 0) {
-                                     // Calculamos el promedio
-                                     $promedio = $totalNotas / 1;
-                                     $integradora = $promedio*0.35 ;
-                                     ?>
-                                 <td><?php echo $promedio; ?></td>
-                                 <td><?php echo $integradora; ?></td>
-                                
-                                     <?php
- 
-                                 } else {
-
-                                 }
-                             } else {
-
-                             }
- 
-                             //FIN SEGUNDO PERIODO INTEGRADORA
-
-
-
-
-
-
-//====================================================================================================================================================================
-
-
-                             //SEGUNDO PERIODO EXAMEN
-                             $consultaPrimerTrimestre = "SELECT * FROM notas WHERE nie = '$nie' AND materia = '$materia' AND periodo = '2PER' AND tipo_actividad='examen'";
-                             $resultadoPrimerTrimestre = mysqli_query($conn, $consultaPrimerTrimestre);
-                             $totalNotas = 0;
-                             $numeroNotas = 0;
-                             if(mysqli_num_rows($resultadoPrimerTrimestre) > 0){
-                                 while($row = mysqli_fetch_array($resultadoPrimerTrimestre)){
-                                     // Asumiendo que tienes un campo 'nota' en tu tabla
-                                     $nota = $row['nota'];
-                                     $totalNotas += $nota;
-                                     // Contamos la cantidad de notas
-                                     $numeroNotas++;
- 
-                                     
-                                 }
-                                 if ($numeroNotas > 0) {
-                                     // Calculamos el promedio
-                                     $promedio = $totalNotas / 1;
-                                     $examen = $promedio*0.30 ;
-                                     ?>
-                                 <td><?php echo $promedio; ?></td>
-                                 <td><?php echo $examen; ?></td>
-                                 <td><?php $prom2 = $cotidiana + $integradora + $examen; echo $prom2; ?></td>
-                                     <?php
- 
-                                 } else {
-
-                                 }
-                             } else {
-
-                             }
- 
-                             //FIN SEGUNDO PERIODO EXAMEN                             
-
-                                ?>
-
-                                
-
-                            <?php
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//====================================================================================================================================================================
-//INICIO TERCER PERIODO
-
-
-                                //TERCER PERIODO COTIDIANAS
-                                $consultaPrimerTrimestre = "SELECT * FROM notas WHERE nie = '$nie' AND materia = '$materia' AND periodo = '3PER' AND tipo_actividad='cotidiana'";
-                                $resultadoPrimerTrimestre = mysqli_query($conn, $consultaPrimerTrimestre);
-                                $totalNotas = 0;
-                                $numeroNotas = 0;
-                                if(mysqli_num_rows($resultadoPrimerTrimestre) > 0){
-                                    while($row = mysqli_fetch_array($resultadoPrimerTrimestre)){
-                                        // Asumiendo que tienes un campo 'nota' en tu tabla
-                                        $nota = $row['nota'];
-                                        $totalNotas += $nota;
-                                        // Contamos la cantidad de notas
-                                        $numeroNotas++;
-    
-                                        
-                                    }
-                                    if ($numeroNotas > 0) {
-                                        // Calculamos el promedio
-                                        $promedio = $totalNotas / 5;
-                                        $cotidiana = $promedio*0.35 ;
-                                        ?>
-                                    <td><?php echo $promedio; ?></td>
-                                    <td><?php echo $cotidiana; ?></td>
-                                   
-                                        <?php
-    
-                                    } else {
-    
-                                    }
-                                } else {
-    
-                                }
-    
-                                //FIN TERCER PERIODO COTIDIANAS
-
-
-
-
-
-
-
-
-                                //====================================================================================================================================================================
-
-
-                             //TERCER PERIODO INTEGRADORA
-                             $consultaPrimerTrimestre = "SELECT * FROM notas WHERE nie = '$nie' AND materia = '$materia' AND periodo = '3PER' AND tipo_actividad='integradora'";
-                             $resultadoPrimerTrimestre = mysqli_query($conn, $consultaPrimerTrimestre);
-                             $totalNotas = 0;
-                             $numeroNotas = 0;
-                             if(mysqli_num_rows($resultadoPrimerTrimestre) > 0){
-                                 while($row = mysqli_fetch_array($resultadoPrimerTrimestre)){
-                                     // Asumiendo que tienes un campo 'nota' en tu tabla
-                                     $nota = $row['nota'];
-                                     $totalNotas += $nota;
-                                     // Contamos la cantidad de notas
-                                     $numeroNotas++;
- 
-                                     
-                                 }
-                                 if ($numeroNotas > 0) {
-                                     // Calculamos el promedio
-                                     $promedio = $totalNotas / 1;
-                                     $integradora = $promedio*0.35 ;
-                                     ?>
-                                 <td><?php echo $promedio; ?></td>
-                                 <td><?php echo $integradora; ?></td>
-                                
-                                     <?php
- 
-                                 } else {
-
-                                 }
-                             } else {
-
-                             }
- 
-                             //FIN TERCER PERIODO INTEGRADORA
-
-
-
-
-
-
-//====================================================================================================================================================================
-
-
-                             //TERCER PERIODO EXAMEN
-                             $consultaPrimerTrimestre = "SELECT * FROM notas WHERE nie = '$nie' AND materia = '$materia' AND periodo = '3PER' AND tipo_actividad='examen'";
-                             $resultadoPrimerTrimestre = mysqli_query($conn, $consultaPrimerTrimestre);
-                             $totalNotas = 0;
-                             $numeroNotas = 0;
-                             if(mysqli_num_rows($resultadoPrimerTrimestre) > 0){
-                                 while($row = mysqli_fetch_array($resultadoPrimerTrimestre)){
-                                     // Asumiendo que tienes un campo 'nota' en tu tabla
-                                     $nota = $row['nota'];
-                                     $totalNotas += $nota;
-                                     // Contamos la cantidad de notas
-                                     $numeroNotas++;
- 
-                                     
-                                 }
-                                 if ($numeroNotas > 0) {
-                                     // Calculamos el promedio
-                                     $promedio = $totalNotas / 1;
-                                     $examen = $promedio*0.30 ;
-                                     ?>
-                                 <td><?php echo $promedio; ?></td>
-                                 <td><?php echo $examen; ?></td>
-                                 <td><?php $prom3 = $cotidiana + $integradora + $examen; echo $prom3; ?></td>
-                                 <td><?php $totalPromedios = $prom1 + $prom2 + $prom3; echo $totalPromedios/3; ?></td>
-                                 
-                                     <?php
- 
-                                 } else {
-
-                                 }
-                             } else {
-
-                             }
- 
-                             //FIN TERCER PERIODO EXAMEN                             
-
-                                ?>
-
-                                
-
-                            <?php
-
+                            // Calcular la nota final (NF) solo si no hay ningún "-"
+                            $notaFinal = in_array("-", $promedios) ? "-" : array_sum($promedios) / count($promedios);
+                            echo "<td class='nota-final'>{$notaFinal}</td></tr>"; // Fondo amarillo para NF
                         }
-                        
                     }
-                
                 ?>
-                </tr>
-            
             </tbody>
-
-            </table>
-
+        </table>
     </div>
 </div>
 

@@ -6,6 +6,7 @@
     <title>Dashboard para Maestros</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="sidebar.css">
+    <link rel="stylesheet" href="notas.css">
 </head>
 
 <body>
