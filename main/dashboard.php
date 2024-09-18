@@ -8,6 +8,13 @@
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="sidebar.css">
 
+    <!-- Estilo personalizado para reducir la altura del banner -->
+    <style>
+        #banner .carousel-item img {
+            height: 600px; /* Puedes ajustar la altura aquí */
+            object-fit: cover; /* Hace que la imagen se ajuste correctamente dentro del espacio */
+        }
+    </style>
 </head>
 <body>
 
@@ -52,17 +59,14 @@
                 <?php } ?>
             </div>
 
-
             <a href="lugares.php" class="list-group-item list-group-item-action bg-dark text-white d-flex align-items-center">
             <i class="fa-solid fa-trophy me-2"></i> Lugares
             </a>
-
 
             <a href="#" class="list-group-item list-group-item-action bg-dark text-white d-flex align-items-center">
                 <i class="fas fa-user-graduate me-2"></i> Estudiantes
             </a>
 
-            
             <a href="notas.php" class="list-group-item list-group-item-action bg-dark text-white d-flex align-items-center">
                 <i class="fa-solid fa-scroll me-2"></i> Notas
             </a>
@@ -78,12 +82,82 @@
     <!-- Page Content -->
     <div id="page-content-wrapper">
         <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
-            <button class="btn btn-primary mr-2" id="menu-toggle"><i class="fa-solid fa-bars"></i></button><h style="font-weight: bold;" >INICIO</h>
+            <button class="btn btn-primary mr-2" id="menu-toggle"><i class="fa-solid fa-bars"></i></button><h style="font-weight: bold;">INICIO</h>
         </nav>
 
         <div class="container-fluid">
-        <h2 class="mt-2" style="color:  #343a40;" >Bienvenido, Prof. <?php echo $_SESSION["nombre"] ?>.</h2>
+        <h2 class="mt-2" style="color: #343a40;">Bienvenido, Prof. <?php echo $_SESSION["nombre"] ?>.</h2>
             <p>Este es tu panel de control donde puedes gestionar tus clases, estudiantes, tareas y notas.</p>
+
+            <!-- Banner -->
+            <div id="banner" class="mt-3">
+                <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-indicators">
+                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"></button>
+                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"></button>
+                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"></button>
+                    </div>
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <img src="../imgs/educacion.jpg" class="d-block w-100" alt="Banner 1">
+                        </div>
+                        <div class="carousel-item">
+                            <img src="../imgs/educacion2.jpg" class="d-block w-100" alt="Banner 2">
+                        </div>
+                        <div class="carousel-item">
+                            <img src="../imgs/educacion3.jpg" class="d-block w-100" alt="Banner 3">
+                        </div>
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
+            </div>
+        
+            <!-- Sección de Noticias -->
+            <div class="row mt-5">
+                <div class="col-12">
+                    <h3>Últimas Noticias</h3>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="card">
+                        <img src="noticia1.jpg" class="card-img-top" alt="Noticia 1">
+                        <div class="card-body">
+                            <h5 class="card-title">Noticia 1</h5>
+                            <p class="card-text">Descripción breve de la noticia 1.</p>
+                            <a href="#" class="btn btn-primary">Leer más</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="card">
+                        <img src="noticia2.jpg" class="card-img-top" alt="Noticia 2">
+                        <div class="card-body">
+                            <h5 class="card-title">Noticia 2</h5>
+                            <p class="card-text">Descripción breve de la noticia 2.</p>
+                            <a href="#" class="btn btn-primary">Leer más</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="card">
+                        <img src="noticia3.jpg" class="card-img-top" alt="Noticia 3">
+                        <div class="card-body">
+                            <h5 class="card-title">Noticia 3</h5>
+                            <p class="card-text">Descripción breve de la noticia 3.</p>
+                            <a href="#" class="btn btn-primary">Leer más</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <!-- /#page-content-wrapper -->
@@ -99,19 +173,17 @@
         document.getElementById("wrapper").classList.toggle("toggled");
     });
 
-      // Script para mostrar/ocultar el submenú con animación
-      document.getElementById("libretaNotasLink").addEventListener("click", function() {
-            var submenu = document.getElementById("submenuGrados");
-            if (submenu.style.maxHeight) {
-                // Si maxHeight está definido, colapsa el submenú
-                submenu.style.maxHeight = null;
-                submenu.style.display = "none";
-            } else {
-                // Si maxHeight no está definido, despliega el submenú
-                submenu.style.display = "flex";
-                submenu.style.maxHeight = submenu.scrollHeight + "px";
-            }
-        });
+    // Script para mostrar/ocultar el submenú con animación
+    document.getElementById("libretaNotasLink").addEventListener("click", function() {
+        var submenu = document.getElementById("submenuGrados");
+        if (submenu.style.maxHeight) {
+            submenu.style.maxHeight = null;
+            submenu.style.display = "none";
+        } else {
+            submenu.style.display = "flex";
+            submenu.style.maxHeight = submenu.scrollHeight + "px";
+        }
+    });
 </script>
 </body>
 </html>

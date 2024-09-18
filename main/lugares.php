@@ -80,7 +80,7 @@
         <!-- Page Content -->
         <div id="page-content-wrapper">
             <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
-                <button class="btn btn-primary" id="menu-toggle"><i id="sidebar-icon" class="fa-solid fa-bars"></i></button>
+            <button class="btn btn-primary mr-2" id="menu-toggle"><i class="fa-solid fa-bars"></i></button><h style="font-weight: bold;" >LUGARES</h>
             </nav>
 
             <div class="container-fluid">
