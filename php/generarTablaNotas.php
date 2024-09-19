@@ -18,15 +18,20 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
             <input type="hidden" name="grado" value="<?php echo htmlspecialchars($grado); ?>">
             <input type="hidden" name="materia" value="<?php echo htmlspecialchars($materia); ?>">
             <input type="hidden" name="periodo" value="<?php echo htmlspecialchars($periodo); ?>">
-            <button type="submit" class="btn btn-primary mb-2" style="color: white;" > <i class="fa-solid fa-floppy-disk"></i> Guardar Notas</button>
-        
+            <button type="submit" class="btn btn-primary mb-2" style="color: white;"> <i class="fa-solid fa-floppy-disk"></i> Guardar Notas</button>
+
+            <div class="form-group">
+                <label for="searchInput">Buscar Alumno:</label>
+                <input type="text" id="searchInput" class="form-control" placeholder="Buscar por nombre o apellidos">
+            </div>
+
             <table class="table table-striped table-bordered">
                 <thead>
                     <tr>
                         <th class="alumno">N°</th>
                         <th class="alumno">Alumno</th>
                         <th colspan="5" class="cotidiana">Actividad Cotidiana 35%</th>
-                        <th class="cotidiana  td-cotidiana">Prom. Cot</th>
+                        <th class="cotidiana td-cotidiana">Prom. Cot</th>
                         <th class="integradora">Actividad Integradora 35%</th>
                         <th class="integradora td-integradora">Prom. Int</th>
                         <th class="examen">Examen 30%</th>
@@ -50,7 +55,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                     </tr>
                 </thead>
 
-                <tbody>
+                <tbody id="tableBody">
                     <?php
                     $sql = "SELECT nie, apellidos, nombre FROM alumnos WHERE grado='$grado' ORDER BY apellidos";
                     $buscar = mysqli_query($conn, $sql);
@@ -82,7 +87,10 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                     ?>
                             <tr>
                                 <td class="alumno"><?php echo $numeroLista; ?></td>
-                                <td class="alumno"><input type="text" class="nombre-input" value="<?php echo $nombreCompleto; ?>" readonly></td>
+                                <td class="alumno">
+                                    <input type="hidden" class="nombre" value="<?php echo $nombreCompleto; ?>">
+                                    <input type="text" class="nombre-input" value="<?php echo $nombreCompleto; ?>" readonly>
+                                </td>
 
                                 <!-- ACTIVIDADES COTIDIANAS -->
                                 <?php
@@ -124,12 +132,12 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                     <?php
                         }
                     } else {
-                        echo "<tr><td colspan='10'>Error en la consulta de la base de datos.</td></tr>";
+                        echo "<tr><td colspan='13'>Error en la consulta de la base de datos.</td></tr>";
                     }
                     ?>
                 </tbody>
             </table>
-           </form>
+        </form>
     </div>
 </div>
 
@@ -164,6 +172,16 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         var promFinal = promCotidianas + promIntegradoras + promExamen;
         row.querySelector('.promedio-final').value = promFinal.toFixed(2);
     }
+
+    $(document).ready(function() {
+        $("#searchInput").on("keyup", function() {
+            var value = $(this).val().toLowerCase();
+            $("#tableBody tr").filter(function() {
+                var nombre = $(this).find(".nombre").val().toLowerCase();
+                $(this).toggle(nombre.indexOf(value) > -1);
+            });
+        });
+    });
 </script>
 
 <?php

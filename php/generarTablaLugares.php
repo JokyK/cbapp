@@ -49,10 +49,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     </tr>
                     <tr>
                         <th></th>
-                        <th class="nota">N1</th><th class="nota">0.35%</th><th class="nota">N2</th><th class="nota">0.35%</th><th class="nota">N3</th><th class="nota">0.30%</th><th class="nota">NP</th>
-                        <th class="nota">N1</th><th class="nota">0.35%</th><th class="nota">N2</th><th class="nota">0.35%</th><th class="nota">N3</th><th class="nota">0.30%</th><th class="nota">NP</th>
-                        <th class="nota">N1</th><th class="nota">0.35%</th><th class="nota">N2</th><th class="nota">0.35%</th><th class="nota">N3</th><th class="nota">0.30%</th><th class="nota">NP</th>
-                        <th>PF</th>
+                        <th >N1</th><th >0.35%</th><th >N2</th><th >0.35%</th><th >N3</th><th >0.30%</th><th class="nota-final">NP</th>
+                        <th >N1</th><th >0.35%</th><th >N2</th><th >0.35%</th><th >N3</th><th >0.30%</th><th class="nota-final">NP</th>
+                        <th >N1</th><th >0.35%</th><th >N2</th><th >0.35%</th><th >N3</th><th >0.30%</th><th class="nota-final">NP</th>
+                        <th class="nota-final">PF</th>
                     </tr>
                 </thead>
                 <tbody>';
@@ -78,10 +78,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $totalPromedios += ($promedioPeriodo !== "-") ? $promedioPeriodo : 0;
 
                 // Mostrar las notas en la tabla
-                echo '<td>' . ($cotidiana !== "-" ? number_format($cotidiana / 0.35, 2) : '-') . '</td><td>' . ($cotidiana !== "-" ? number_format($cotidiana, 2) : '-') . '</td>';
-                echo '<td>' . ($integradora !== "-" ? number_format($integradora / 0.35, 2) : '-') . '</td><td>' . ($integradora !== "-" ? number_format($integradora, 2) : '-') . '</td>';
-                echo '<td>' . ($examen !== "-" ? number_format($examen / 0.30, 2) : '-') . '</td><td>' . ($examen !== "-" ? number_format($examen, 2) : '-') . '</td>';
-                echo '<td>' . ($promedioPeriodo !== "-" ? number_format($promedioPeriodo, 2) : '-') . '</td>';
+                echo '<td >' . ($cotidiana !== "-" ? number_format($cotidiana / 0.35, 2) : '-') . '</td>
+                      <td >' . ($cotidiana !== "-" ? number_format($cotidiana, 2) : '-') . '</td>';
+                echo '<td >' . ($integradora !== "-" ? number_format($integradora / 0.35, 2) : '-') . '</td>
+                      <td >' . ($integradora !== "-" ? number_format($integradora, 2) : '-') . '</td>';
+                echo '<td >' . ($examen !== "-" ? number_format($examen / 0.30, 2) : '-') . '</td>
+                      <td >' . ($examen !== "-" ? number_format($examen, 2) : '-') . '</td>';
+                echo '<td class="nota-final">' . ($promedioPeriodo !== "-" ? number_format($promedioPeriodo, 2) : '-') . '</td>';
             }
 
             // Calcular la nota final
@@ -96,7 +99,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             }
 
             // Mostrar la nota final en la tabla
-            echo '<td>' . ($notaFinal !== '-' ? $notaFinal : '-') . '</td>';
+            echo '<td class="nota-final">' . ($notaFinal !== '-' ? $notaFinal : '-') . '</td>';
             echo '</tr>';
         }
 
@@ -152,6 +155,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         margin-bottom: 10px;
         padding: 8px;
         font-size: 16px;
+    }
+
+    /* Estilos para la nota final de cada periodo y la nota final general */
+    .nota-final {
+        background-color: #ffff99;
+        font-weight: bold;
     }
 </style>
 

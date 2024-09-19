@@ -6,6 +6,17 @@
     transition: all 0.3s ease;
 }
 
+/* Animación de rotación */
+.rotate {
+    transition: transform 0.3s ease;
+    transform: rotate(90deg); /* Rotación de 90 grados */
+}
+
+.rotate-back {
+    transition: transform 0.3s ease;
+    transform: rotate(0deg); /* Regresa a su posición original */
+}
+
 #sidebar-wrapper {
     width: 250px;
     height: 100vh;

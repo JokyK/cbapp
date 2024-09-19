@@ -11,6 +11,7 @@
     <!-- Estilo personalizado para reducir la altura del banner -->
     <style>
         #banner .carousel-item img {
+            filter: brightness(.7);
             height: 600px; /* Puedes ajustar la altura aquí */
             object-fit: cover; /* Hace que la imagen se ajuste correctamente dentro del espacio */
         }
@@ -99,7 +100,7 @@
                     </div>
                     <div class="carousel-inner">
                         <div class="carousel-item active">
-                            <img src="../imgs/educacion.jpg" class="d-block w-100" alt="Banner 1">
+                            <img src="../imgs/educacion1.jpg" class="d-block w-100" alt="Banner 1">
                         </div>
                         <div class="carousel-item">
                             <img src="../imgs/educacion2.jpg" class="d-block w-100" alt="Banner 2">
@@ -168,22 +169,6 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://kit.fontawesome.com/040fe237ff.js" crossorigin="anonymous"></script>
 <!-- Script personalizado -->
-<script>
-    document.getElementById("menu-toggle").addEventListener("click", function() {
-        document.getElementById("wrapper").classList.toggle("toggled");
-    });
-
-    // Script para mostrar/ocultar el submenú con animación
-    document.getElementById("libretaNotasLink").addEventListener("click", function() {
-        var submenu = document.getElementById("submenuGrados");
-        if (submenu.style.maxHeight) {
-            submenu.style.maxHeight = null;
-            submenu.style.display = "none";
-        } else {
-            submenu.style.display = "flex";
-            submenu.style.maxHeight = submenu.scrollHeight + "px";
-        }
-    });
-</script>
+<script src="animacionesSidebar.js"></script>
 </body>
 </html>
