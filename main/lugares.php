@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard para Maestros</title>
+    <title>Panel > Lugares</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="sidebar.css">
     <link rel="stylesheet" href="notas.css">
@@ -89,10 +90,11 @@
                 <!-- Aquí puedes agregar más contenido como gráficos, estadísticas, etc. -->
 
                     <div class="form-container">
-                        <form class="form" method="post">
-
+                        <form class="form" method="post" action="../php/generarTablaLugares.php" >
+                            
+                                <div class="form-group">
                                 <label for="grado">Grado:</label>
-                                <select name="grado" id="grado">
+                                <select name="grado" id="grado" class="form-control" required>
                                 <option value="">Grado</option>
                                 <?php
                                 $dui = $_SESSION["dui"];
@@ -109,10 +111,10 @@
                                 }
                                 ?>
                                 </select>
-
-
+                                </div>
+                                <div class="form-group">
                                 <label for="materia">Materia:</label>
-                                <select name="materia" id="materia">
+                                <select name="materia" id="materia" class="form-control" required >
                                 <option value="">Materia</option>
                                 <?php
                                 $dui = $_SESSION["dui"];
@@ -129,17 +131,14 @@
                                 }
                                 ?>
                                 </select>
-
-                                <input type="submit" value="CARGAR TABLA">
+                                </div>
+                                <input type="submit" value="CARGAR TABLA" class="btn btn-primary">
                         </form>
                     </div>
 
                     
                     </div>
 
-                    <?php
-                        include("../php/generarTablaLugares.php");
-                        ?>
         </div>
         <!-- /#page-content-wrapper -->
     </div>

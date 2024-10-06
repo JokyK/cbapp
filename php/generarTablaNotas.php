@@ -1,13 +1,20 @@
+<link rel="stylesheet" href="../php/tablaGenerada.css">
 <?php
 include("../php/connDB.php");
-
+session_start();
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
     $grado = $_POST["grado"];
     $materia = $_POST["materia"];
     $periodo = $_POST["periodo"];
-    if ($grado != "" && $materia != "" && $periodo != "") {
+}else{
+    $grado = $_GET["grado"];
+    $materia = $_GET["materia"];
+    $periodo = $_GET["periodo"];
+}
+    if (isset($grado, $materia, $periodo) ) {
+        $dui = $_SESSION["dui"];
 ?>
-
+<title> <?php echo $grado. " > ". $materia. " > ". $periodo ?> </title>
 <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 <div class="alert alert-success" role="alert" style="width: 100%; text-align:center; padding: 5px; margin-top: 20px; ">
     Datos cargados correctamente <h5>Grado: <?php echo $grado . ", Materia: " . $materia . ", Periodo: " . $periodo; ?></h5>
@@ -18,11 +25,13 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
             <input type="hidden" name="grado" value="<?php echo htmlspecialchars($grado); ?>">
             <input type="hidden" name="materia" value="<?php echo htmlspecialchars($materia); ?>">
             <input type="hidden" name="periodo" value="<?php echo htmlspecialchars($periodo); ?>">
+            <input type="hidden" name="dui" value="<?php echo htmlspecialchars($dui); ?>">
+            <a href="../main/notas.php" type="submit" class="btn btn-secondary mb-2" style="color: white;"> <i class="fa-solid fa-circle-left"></i> Atras</a>
             <button type="submit" class="btn btn-primary mb-2" style="color: white;"> <i class="fa-solid fa-floppy-disk"></i> Guardar Notas</button>
-
+            <button type="button" class="btn btn-info mb-2" onclick="printTable()" style="color: white;"><i class="fa-solid fa-print"></i> Imprimir Tabla</button>
             <div class="form-group">
-                <label for="searchInput">Buscar Alumno:</label>
-                <input type="text" id="searchInput" class="form-control" placeholder="Buscar por nombre o apellidos">
+                <label for="searchInput" class="input" >Buscar Alumno:</label>
+                <input type="text" id="searchInput" class="form-control input" placeholder="Buscar por nombre o apellidos">
             </div>
 
             <table class="table table-striped table-bordered">
@@ -89,7 +98,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                                 <td class="alumno"><?php echo $numeroLista; ?></td>
                                 <td class="alumno">
                                     <input type="hidden" class="nombre" value="<?php echo $nombreCompleto; ?>">
-                                    <input type="text" class="nombre-input" value="<?php echo $nombreCompleto; ?>" readonly>
+                                    <a type="text"> <?php echo $nombreCompleto; ?> </a>
                                 </td>
 
                                 <!-- ACTIVIDADES COTIDIANAS -->
@@ -142,6 +151,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 </div>
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://kit.fontawesome.com/040fe237ff.js" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
@@ -182,10 +192,102 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
             });
         });
     });
+
+
+    function printTable() {
+    // Obtener el contenido de la tabla
+    var printContent = document.querySelector('.table-responsive').innerHTML;
+
+    // Obtener los valores de grado, materia y periodo
+    var grado = "<?php echo htmlspecialchars($grado); ?>";
+    var materia = "<?php echo htmlspecialchars($materia); ?>";
+    var periodo = "<?php echo htmlspecialchars($periodo); ?>";
+
+    // Crear una nueva ventana
+    var printWindow = window.open('', '_blank');
+
+    // Añadir contenido HTML para impresión
+    printWindow.document.write(`
+        <html>
+            <head>
+                <title>Tabla De: ${grado} - ${materia} - ${periodo}</title>
+                <link rel="stylesheet" href="../php/tablaGenerada.css">
+                <style>
+                    @media print {
+                        @page {
+                            size: landscape;
+                            margin: 10mm; /* Ajustar los márgenes */
+                        }
+                        body {
+                            margin: 0;
+                            padding: 0;
+                            font-size: 10px; /* Reducir tamaño de fuente */
+                            display: flex;
+                            flex-direction: column; /* Asegurar el centrado solo vertical */
+                            justify-content: center; /* Centrar verticalmente */
+                            height: 100vh; /* Asegura que ocupe la altura total de la página */
+                        }
+                        h2 {
+                            text-align: center;
+                        }
+                        table {
+                            width: 100%; /* Usar el ancho completo de la página */
+                            border-collapse: collapse;
+                            border: 2px solid black;
+                            text-align: center;
+                        }
+                        th, td {
+                            border: 1px solid rgb(197, 197, 197);
+                            padding: 4px; /* Reducir padding */
+                        }
+                        .nota {
+                            width: 40px; /* Reducir el ancho de las celdas de notas */
+                            font-size: 10px; /* Reducir tamaño de fuente */
+                        }
+                        .promedio-cotidiana,
+                        .promedio-integradora,
+                        .promedio-examen,
+                        .promfin .nota {
+                            background-color: transparent;
+                            border: none;
+                        }
+                        button, a, .input {
+                            display: none; /* Ocultar botones, inputs y labels al imprimir */
+                        }
+                        .nombre-input {
+                            display: block; /* Asegurarse de que se muestre el input */
+                            width: 100%; /* Ancho completo para mostrar todo el texto */
+                            border: none; /* Sin borde */
+                            background-color: transparent; /* Sin fondo */
+                            color: rgb(39, 39, 39); /* Color del texto */
+                            white-space: nowrap; /* Evitar el salto de línea */
+                            overflow: visible; /* Permitir que el texto visible se extienda */
+                        }
+                    }
+                </style>
+            </head>
+            <body>
+                <div class="table-responsive">
+                    ${printContent}
+                </div>
+            </body>
+        </html>
+    `);
+
+    // Esperar a que se cargue el contenido
+    printWindow.document.close();
+    printWindow.focus();
+    printWindow.print();
+    printWindow.close();
+}
+
+
+
 </script>
 
 <?php
     } else {
+        header("location: ../main/dashboard.php");
 ?>
 <div class="alert alert-warning" role="alert" style="width: 100%; text-align:center; padding: 5px; margin-top: 20px; ">
     ¡Ingresa primero:
@@ -197,5 +299,4 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 </div>
 <?php
     }
-}
 ?>

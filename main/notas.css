@@ -1,43 +1,70 @@
-.form {
-    font-size: 16px;
-    height: 60px;
+body {
+    background-color: #f8f9fa; /* Fondo claro para el body */
+    height: 100vh; /* Altura completa de la vista */
     display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    background-color: rgb(41, 41, 41);
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.541); /* Sombra suave */
+    justify-content: center; /* Centrar el contenido horizontalmente */
+    align-items: center; /* Centrar el contenido verticalmente */
+    margin: 0; /* Eliminar márgenes */
+}
+.form-container {
+    width: 100%; /* Ancho más amplio para el formulario */
+    padding: 20px; /* Espaciado interno */
+    border: 1px solid #dee2e6; /* Bordes */
+    border-radius: 10px; /* Bordes redondeados */
+    background-color: #ffffff; /* Fondo blanco */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    animation: fadeIn 0.5s; /* Animación de entrada */
+}
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+.form-group {
+    margin-bottom: 15px; /* Espacio entre grupos de formularios */
+}
+.form-group label {
+    margin-bottom: 5px; /* Espacio debajo del label */
+}
+.form-control {
+    width: 100%; /* Campos de entrada ocupan el ancho completo */
+    height: 45px; /* Aumentar altura de los campos de entrada */
+    transition: transform 0.3s, border-color 0.3s; /* Transiciones suaves */
+}
+.form-control:focus {
+    border-color: lightblue; /* Color de borde en enfoque */
+    transform: scale(1.01); /* Aumento de tamaño al enfocar */
+    box-shadow: 0 0 8px lightblue; /* Sombra al enfocar */
+}
+.form-control:not(:focus) {
+    transition: transform 0.1s; /* Suave transición cuando no está en foco */
+}
+.form-control:focus-visible {
+    outline: none; /* Eliminar el contorno predeterminado */
+}
+.form input[type="submit"] {
+    width: 100%; /* Botón ocupa el ancho completo */
+    padding: 10px; /* Padding del botón */
+    transition: background-color 0.1s, transform 0.1s; /* Transiciones de color de fondo y transformación */
+}
+.form input[type="submit"]:hover {
+    background-color: #0056b3; /* Cambiar color al pasar el mouse */
+   }
+.form input[type="submit"]:active {
+    transform: scale(0.95); /* Efecto de rebote al hacer clic */
 }
 
-.form label {
-    color: rgb(255, 255, 255);
-    font-size: 16px;
-    margin-right: 5px;
-    font-weight: bold;
-}
-
-.form select {
-    margin-right: 50px;
-    border: none;
+select {
+    appearance: none; /* Elimina la flecha por defecto */
+    -webkit-appearance: none;
+    -moz-appearance: none;
     background-color: white;
-    width: fit-content;
-    text-align: center;
-    padding: 2px 10px;
-    border-radius: 3px;
-}
-
-.form input {
-    font-size: 16px;
-    margin: 0;
-    text-align: center;
-    width: fit-content;
-    border-radius: 3px;
-    margin: 30px;
-    outline: none;
-    border: none;
-    color: #000000;
-    font-weight: bold;
-    background-color: #ffffff;
-    padding: 2px 20px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 4px;
+    width: 100%;
+    box-sizing: border-box;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="%23999" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"/></svg>'); /* Flecha nueva */
+    background-repeat: no-repeat;
+    background-position: right 10px center; /* Posiciona la flecha */
+    background-size: 20px; /* Tamaño de la flecha */
 }

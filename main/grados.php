@@ -1,9 +1,17 @@
+<?php $grado = $_GET["grado"]; 
+if(!isset($_GET["grado"])) {
+
+header("location: dashboard.php");
+
+}else{
+    ?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard para Maestros</title>
+    <title>Panel > Grados > <?php echo $grado; ?> </title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="sidebar.css">
@@ -101,3 +109,11 @@ session_start();
 <script src="animacionesSidebar.js"></script>
 </body>
 </html>
+
+
+<?php
+}
+
+?>
+
+

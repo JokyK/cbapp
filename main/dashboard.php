@@ -14,6 +14,7 @@
             filter: brightness(.7);
             height: 600px; /* Puedes ajustar la altura aquí */
             object-fit: cover; /* Hace que la imagen se ajuste correctamente dentro del espacio */
+            border-radius: 5px;
         }
     </style>
 </head>

@@ -23,7 +23,6 @@ function obtenerPromedio($nie, $materia, $grado, $periodo, $tipo_actividad, $con
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $grado = $_POST["grado"];
     $materia = $_POST["materia"];
-    $dui = $_SESSION["dui"];
 
     $consulta = "SELECT * FROM alumnos WHERE grado = '$grado' ORDER BY apellidos";
     $resultado = mysqli_query($conn, $consulta);
